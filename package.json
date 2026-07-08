@@ -5,8 +5,8 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-builder --win",
-    "build-mac": "electron-builder --mac"
+    "build": "electron-builder --win --publish never",
+    "build-mac": "electron-builder --mac --publish never"
   },
   "author": "You",
   "license": "MIT",
