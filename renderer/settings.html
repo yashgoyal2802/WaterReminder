@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>Water Reminder — Dashboard</title>
+  <link rel="stylesheet" href="settings.css" />
+  <!-- Import Outfit font for premium look -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <span class="icon">💧</span>
+        <h2>Water Reminder</h2>
+      </div>
+      <nav class="sidebar-menu">
+        <button class="menu-item active" data-tab="tab-schedule">
+          <span class="menu-icon">⏰</span>
+          Schedule Settings
+        </button>
+        <button class="menu-item" data-tab="tab-studio">
+          <span class="menu-icon">🎨</span>
+          Character Studio
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="version-tag">v2.0.0</span>
+        <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">
+          <span id="theme-icon">🌙</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Pane -->
+    <main class="content-pane">
+      <!-- Tab 1: Schedule Settings -->
+      <section id="tab-schedule" class="tab-content active">
+        <header class="tab-header">
+          <h1>Schedule Settings</h1>
+          <p>Configure reminder intervals and system behaviors</p>
+        </header>
+
+        <div class="panel">
+          <div class="row">
+            <label for="interval">Reminder Cadence</label>
+            <div class="input-group">
+              <select id="interval">
+                <option value="30">Every 30 minutes</option>
+                <option value="60">Every 1 hour</option>
+                <option value="90">Every 1.5 hours</option>
+                <option value="120">Every 2 hours</option>
+                <option value="custom">Custom interval...</option>
+              </select>
+              <input type="number" id="intervalCustom" min="1" max="600" placeholder="minutes" class="hidden" />
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="snooze">Snooze Duration (minutes)</label>
+            <input type="number" id="snooze" min="1" max="120" />
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row checkbox">
+            <label class="switch">
+              <input type="checkbox" id="autostart" />
+              <span class="slider"></span>
+            </label>
+            <div class="checkbox-labels">
+              <span class="checkbox-title">Launch on Windows startup</span>
+              <span class="checkbox-desc">Start reminders automatically when the computer boots</span>
+            </div>
+          </div>
+
+          <div class="row checkbox">
+            <label class="switch">
+              <input type="checkbox" id="paused" />
+              <span class="slider"></span>
+            </label>
+            <div class="checkbox-labels">
+              <span class="checkbox-title">Pause reminders</span>
+              <span class="checkbox-desc">Temporarily freeze all hydration alerts</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Tab 2: Character Studio -->
+      <section id="tab-studio" class="tab-content">
+        <header class="tab-header">
+          <h1>Character Studio</h1>
+          <p>Choose or upload your custom reminder character</p>
+        </header>
+
+        <div class="studio-layout">
+          <!-- Left Column: Controls -->
+          <div class="studio-controls">
+            <div class="panel">
+              <div class="row">
+                <label>Sprite Source</label>
+                <div class="segmented-control">
+                  <input type="radio" name="spriteType" id="sprite-default" value="default" checked />
+                  <label for="sprite-default">Default Astronaut</label>
+
+                  <input type="radio" name="spriteType" id="sprite-custom" value="custom" />
+                  <label for="sprite-custom">Custom Upload</label>
+                </div>
+              </div>
+
+              <!-- Custom Uploader Panel -->
+              <div id="custom-uploader-area" class="hidden">
+                <div class="row">
+                  <label>Spritesheet File</label>
+                  <div class="upload-box" id="upload-trigger">
+                    <span class="upload-icon">📤</span>
+                    <span class="upload-text" id="upload-status-text">Select PNG Spritesheet</span>
+                    <span class="file-path-info" id="file-path-display">No file selected</span>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label>Grid Architecture (Columns per Row)</label>
+                  <div class="grid-fields">
+                    <div class="grid-field">
+                      <span class="field-lbl">Row 0 (Walk-In)</span>
+                      <input type="number" id="cols-row0" min="1" max="20" value="6" />
+                    </div>
+                    <div class="grid-field">
+                      <span class="field-lbl">Row 1 (Drinking)</span>
+                      <input type="number" id="cols-row1" min="1" max="20" value="5" />
+                    </div>
+                    <div class="grid-field">
+                      <span class="field-lbl">Row 2 (Walk-Out)</span>
+                      <input type="number" id="cols-row2" min="1" max="20" value="6" />
+                    </div>
+                  </div>
+                  <p class="helper-text">Specify how many frames (columns) are in each animation row.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Interactive Live Preview Stage -->
+          <div class="studio-preview">
+            <div class="panel stage-panel">
+              <span class="panel-tag">Live Preview Stage</span>
+              <div class="preview-stage" id="preview-stage">
+                <!-- Floor element -->
+                <div class="preview-floor"></div>
+                <!-- Character container -->
+                <div class="preview-character" id="preview-character"></div>
+              </div>
+
+              <div class="preview-controls">
+                <button class="preview-btn active" id="btn-prev-walkin">Walk-In</button>
+                <button class="preview-btn" id="btn-prev-drink">Drink / Idle</button>
+                <button class="preview-btn" id="btn-prev-walkout">Walk-Out</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Bottom Bar for Save/Cancel -->
+      <footer class="footer-actions">
+        <p class="status-msg" id="status"></p>
+        <div class="button-group">
+          <button id="cancel" class="btn-secondary">Cancel</button>
+          <button id="save" class="btn-primary">Save changes</button>
+        </div>
+      </footer>
+    </main>
+  </div>
+
+  <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+{
+  "name": "water-reminder",
+  "version": "2.0.0",
+  "description": "Hydration reminder with animated character",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win",
+    "build-mac": "electron-builder --mac"
+  },
+  "author": "You",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.you.waterreminder",
+    "productName": "Water Reminder",
+    "files": ["main.js", "preload.js", "renderer/**/*", "assets/**/*"],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/tray-icon.png"
+    },
+    "mac": {
+      "target": ["dmg", "zip"],
+      "icon": "assets/tray-icon.png",
+      "category": "public.app-category.healthcare-fitness"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": false
+    }
+  }
+}

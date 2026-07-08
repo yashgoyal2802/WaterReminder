@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="reminder.css" />
+  <!-- Import Outfit font for premium look -->
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div id="stage">
+    <div id="character"></div>
+
+    <div id="bubble" class="hidden">
+      <div id="bubble-text">Time to drink water! 💧</div>
+      <div class="bubble-tail"></div>
+    </div>
+
+    <div id="bubble-buttons" class="hidden">
+      <button data-action="remind30">Remind in 30 min</button>
+      <button data-action="remind60">Remind in 1 hr</button>
+      <button data-action="snooze" id="snooze-btn">Snooze</button>
+    </div>
+  </div>
+  <script src="reminder.js"></script>
+</body>
+</html>
