@@ -197,6 +197,8 @@ function createTray() {
     img = nativeImage.createFromDataURL(
       'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAKklEQVQ4T2NkYGD4z0AEYBxVSF6IjIYCw6ihMBoKDKOhwDAaCgxDMxQAqTQCAWy0m0kAAAAASUVORK5CYII='
     );
+  } else if (process.platform === 'darwin') {
+    img = img.resize({ width: 22, height: 22 });
   }
   tray = new Tray(img);
   tray.setToolTip('Water Reminder');
@@ -285,6 +287,7 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', (e) => { e.preventDefault(); });
+app.on('activate', () => { openSettings(); });
 app.on('before-quit', () => {
   targetTime = null;
   if (checkInterval) {
